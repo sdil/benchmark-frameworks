@@ -1,6 +1,5 @@
 # TodoPhoenix
 
-based on: https://www.poeticoding.com/another-guide-to-build-a-json-api-with-phoenix-1-5/
 
 To start your Phoenix server:
 

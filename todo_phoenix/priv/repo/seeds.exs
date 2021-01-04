@@ -12,4 +12,5 @@
 
 alias TodoPhoenix.Todos
 
-Todos.create_todo(%{title: "test", description: "test"})
+for n <- 1..10, do:
+  Todos.create_todo(%{title: "test", description: "test"})
