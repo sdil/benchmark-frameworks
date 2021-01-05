@@ -7,4 +7,11 @@ COPY . .
 
 RUN mix local.hex --force
 RUN mix local.rebar --force
+RUN mix phx.gen.secret
 
+ENV MIX_ENV=prod
+ENV DATABASE_URL=ecto://postgres:postgres@db/todo_phoenix_prod
+ENV SECRET_KEY_BASE='fXDLD2luZksjk1s8S/s29uooMwc2jkJ3sAltVUSulhpNja54EbLP69ZxJLZpmZ97ke5Ph92535qEfA/g/8UKTQ=='
+
+RUN mix deps.update mime
+RUN mix compile
