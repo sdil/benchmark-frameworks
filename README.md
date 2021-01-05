@@ -1,16 +1,16 @@
 # Benchmark Web Frameworks
 
-I have created a simple todo list app that query for all data in the database.
+I have created simple todo list applications in both Elixir Phoenix and Django DRF that query for all data in the database. I'm interested in these frameworks because they both offers 'high productivity' development methodology (scaffolding, ORM, router, etc. comes out of the box) and built for development speed and happiness.
 
-Both applications (Elixir Phoenix and Python Django) are set up with production mode settings and optimizations. Django are run with Gunicorn. You may tweak the worker number to suit your hardware. Elixir Phoenix is run with `MIX_ENV=prod` and is compiled.
+Both applications are set up with production mode settings and optimizations. Django application is run with Gunicorn. You may tweak the worker number to suit your hardware. Elixir Phoenix is run with `MIX_ENV=prod` and is compiled.
 
 Both applications took ~15 minutes to set up and another 1 hour to optimize for production set up.
 
 ## Lessons learned
 
-- After optimizing the set up to production mode, I see almost 10x improvement for the Elixir Phoenix app, from 455 RPS to 4,010 RPS.
-- After optimizing the set up to production mode for Django DRF app, I see 28x improvements, from 14 RPS to 400 RPS.
-- Elixir Phoenix is superior in speed compared to Django in almost 10x. This is a huge difference when translated to capacity planning.
+- After optimizing the set up to production mode, I see almost 10x improvement for the Elixir Phoenix app, from **455 RPS to 4,010 RPS**.
+- After optimizing the set up to production mode for the Django DRF app, I see 28x improvements, from **14 RPS to 400 RPS**.
+- Elixir Phoenix is superior in speed compared to Django in almost 10x. This is a huge difference when translated to capacity planning and infra expense.
 - Always run everything in production mode!
 - There are many things that is not tested here: avoiding N + 1 query, background job, etc.
 
@@ -22,7 +22,7 @@ Both applications took ~15 minutes to set up and another 1 hour to optimize for 
 $ cd todo_phoenix
 $ docker-compose build
 $ docker-compose up
-$ curl -i localhost:4000/api/todos
+$ curl -i localhost:4000/api/todos/
 ```
 
 ### How to run Django REST Framework (DRF)
