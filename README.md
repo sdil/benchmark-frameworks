@@ -1,37 +1,43 @@
 # Benchmark Web Frameworks
 
+I have created a simple todo list app that query for all data in the database.
+
+Both applications (Elixir Phoenix and Python Django) are set up with production mode settings and optimizations. Django are run with Gunicorn. You may tweak the worker number to suit your hardware. Elixir Phoenix is run with `MIX_ENV=prod` and is compiled.
+
+Both applications took ~15 minutes to set up and another 1 hour to optimize for production set up.
+
+## Lessons learned
+
+- After optimizing the set up to production mode, I see almost 10x improvement for the Elixir Phoenix app, from 455 RPS to 4,010 RPS.
+- After optimizing the set up to production mode for Django DRF app, I see 28x improvements, from 14 RPS to 400 RPS.
+- Elixir Phoenix is superior in speed compared to Django in almost 10x. This is a huge difference when translated to capacity planning.
+- Always run everything in production mode!
+- There are many things that is not tested here: avoiding N + 1 query, background job, etc.
+
 ## How to run API servers
 
-Prerequisites:
-
-- Elixir & Phoenix are installed
-
-How to run Phoenix
+### How to run Phoenix
 
 ```shell
-$ make start_db
-$ make start_phoenix
-$ make seed_phoenix
-$ curl -i localhost:4000/api/todos/
+$ cd todo_phoenix
+$ docker-compose build
+$ docker-compose up
+$ curl -i localhost:4000/api/todos
 ```
 
-How to run Django REST Framework (DRF)
+### How to run Django REST Framework (DRF)
 
-Prerequisites:
-
-- Python 3 is installed
-- Django, django-rest-framework & psycopg2 pips are installed
 
 ```shell
-$ make start_db
-$ make start_django
-$ make seed_django
-$ curl -i localhost:8000/api/todos/
+$ cd todo_django
+$ docker-compose build
+$ docker-compose up
+$ curl -i localhost:4000/api/todos/
 ```
 
 ## Benchmark Result
 
-This is the benchmark is running on my machine with the following spec: 8 cores Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz and 16GB of RAM.
+This is the benchmark is running on my machine with the following spec: 8 cores 16 threads Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz and 16GB of RAM.
 
 ### Phoenix Result
 
