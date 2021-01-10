@@ -1,18 +1,18 @@
 # Benchmark Web Frameworks
 
+This project is inspired by [Phoenix Showndown](https://github.com/mroth/phoenix-showdown).
+
 I have created simple todo list applications in both Elixir Phoenix and Django DRF that query for all data in the database. I'm interested in these frameworks because they both offers 'high productivity' development methodology (scaffolding, ORM, router, etc. comes out of the box) and built for development speed and happiness.
 
-Both applications are set up with production mode settings and optimizations. Django application is run with Gunicorn. You may tweak the worker number to suit your hardware. Elixir Phoenix is run with `MIX_ENV=prod` and is compiled.
-
-Both applications took ~15 minutes to set up and another 1 hour to optimize for production set up.
+Both applications took ~15 minutes to build and another 1 hour to optimize for production set up.
 
 ## Lessons learned
 
-- After optimizing the set up to production mode, I see almost 10x improvement for the Elixir Phoenix app, from **455 RPS to 4,010 RPS**.
-- After optimizing the set up to production mode for the Django DRF app, I see 28x improvements, from **14 RPS to 400 RPS**.
-- Elixir Phoenix is superior in speed compared to Django in almost 10x. This is a huge difference when translated to capacity planning and infra expense.
-- Always run everything in production mode!
-- There are many things that is not tested here: avoiding N + 1 query, background job, etc.
+- After optimizing the Elixir Phoenix app setup to production mode, I see almost 10x improvement from **455 RPS to 4,010 RPS**. All I did was set the `MIX_ENV=prod`, compile the source code & set the `max_keepalive` parameter in config/prod.exs.
+- After optimizing the set up to production mode for the Django DRF app, I see 28x improvements from **14 RPS to 400 RPS**. All I did was use Gunicorn and set the correct number of workers for Gunicorn.
+- Elixir Phoenix is superior in speed compared to Django in almost 10x. This is a huge difference when translated to infra expense.
+- Always run everything in production mode to get the full speed!
+- There are many things that is neglected here: avoiding N + 1 query, background job, database optimization, indexing, etc.
 
 ## How to run API servers
 
@@ -32,7 +32,7 @@ $ curl -i localhost:4000/api/todos/
 $ cd todo_django
 $ docker-compose build
 $ docker-compose up
-$ curl -i localhost:4000/api/todos/
+$ curl -i localhost:8000/api/todos/
 ```
 
 ## Benchmark Result
@@ -42,23 +42,23 @@ This is the benchmark is running on my machine with the following spec: 8 cores 
 ### Phoenix Result
 
 ```shell
-$ ab -n 1000 -c 100 localhost:4000/api/todos/
+$ ab -n 10000 -c 100 localhost:4000/api/todos/
 This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
 
 Benchmarking localhost (be patient)
-Completed 100 requests
-Completed 200 requests
-Completed 300 requests
-Completed 400 requests
-Completed 500 requests
-Completed 600 requests
-Completed 700 requests
-Completed 800 requests
-Completed 900 requests
 Completed 1000 requests
-Finished 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
 
 
 Server Software:        Cowboy
@@ -66,36 +66,36 @@ Server Hostname:        localhost
 Server Port:            4000
 
 Document Path:          /api/todos/
-Document Length:        461 bytes
+Document Length:        11 bytes
 
 Concurrency Level:      100
-Time taken for tests:   2.194 seconds
-Complete requests:      1000
+Time taken for tests:   1.619 seconds
+Complete requests:      10000
 Failed requests:        0
-Total transferred:      708000 bytes
-HTML transferred:       461000 bytes
-Requests per second:    455.69 [#/sec] (mean)
-Time per request:       219.449 [ms] (mean)
-Time per request:       2.194 [ms] (mean, across all concurrent requests)
-Transfer rate:          315.06 [Kbytes/sec] received
+Total transferred:      2570000 bytes
+HTML transferred:       110000 bytes
+Requests per second:    6176.04 [#/sec] (mean)
+Time per request:       16.192 [ms] (mean)
+Time per request:       0.162 [ms] (mean, across all concurrent requests)
+Transfer rate:          1550.04 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0    0   0.7      0       7
-Processing:    56  198  35.7    209     250
-Waiting:       56  198  35.7    208     250
-Total:         56  199  35.6    209     250
+Connect:        0    1   1.2      1      12
+Processing:     2   15   4.8     14      42
+Waiting:        1   14   4.7     14      40
+Total:          2   16   4.7     16      43
 
 Percentage of the requests served within a certain time (ms)
-  50%    209
-  66%    215
-  75%    218
-  80%    220
-  90%    226
-  95%    230
-  98%    237
-  99%    242
- 100%    250 (longest request)
+  50%     16
+  66%     17
+  75%     19
+  80%     19
+  90%     22
+  95%     25
+  98%     28
+  99%     30
+ 100%     43 (longest request)
 ```
 
 ### Django + Django REST Framework (DRF) Result
@@ -158,3 +158,7 @@ Percentage of the requests served within a certain time (ms)
  100%  70005 (longest request)
 
 ```
+
+## References
+
+- [Benchmarking Phoenix by Saša Jurić](https://www.theerlangelist.com/article/phoenix_latency)
