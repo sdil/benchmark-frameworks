@@ -16,6 +16,7 @@ Both applications took ~15 minutes to build and another 1 hour to optimize for p
 - After optimizing the set up to production mode for the Django DRF app, I see 58x improvements from **14 RPS to 816 RPS**. The optimizations I did:
   - Use Gunicorn and set the correct number of workers for Gunicorn
   - Set `DEBUG=False` in `settings.py`
+- Non-DB endpoints is much faster than DB endpoints. Whenever you design you system, you may consider loading small data and data that rarely change in the memory instead of storing them in database so that it executes faster.
 - Elixir Phoenix is superior in speed compared to Django at 6x. This is a huge difference when translated to infra expense.
 - Always run everything in production mode to get the full speed!
 - There are many things that is neglected here: avoiding N + 1 query, background job, database optimization, indexing, authentication & authorization in middleware, etc.
