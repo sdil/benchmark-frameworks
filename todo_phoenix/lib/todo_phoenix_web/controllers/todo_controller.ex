@@ -40,4 +40,8 @@ defmodule TodoPhoenixWeb.TodoController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def healthz(conn, _params) do
+    json(conn, %{status: "OK"})
+  end
 end

@@ -9,6 +9,7 @@ defmodule TodoPhoenixWeb.Router do
     pipe_through :api
 
     resources "/todos", TodoController, except: [:new, :edit]
+    get "/healthz", TodoController, :healthz
   end
 
   # Enables LiveDashboard only for development

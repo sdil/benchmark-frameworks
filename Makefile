@@ -16,6 +16,9 @@ seed-django:
 	cd todo_django && docker-compose exec web python3 manage.py shell < seeds.py
 
 run-benchmark:
+	echo "Benchmarking non-database endpoint"
+	ab -n 1000 -c 100 localhost:8000/api/healthz
+	echo "Benchmarking database endpoint"
 	ab -n 1000 -c 100 localhost:8000/api/todos/
 
 run-curl:

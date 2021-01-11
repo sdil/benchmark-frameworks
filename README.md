@@ -8,7 +8,7 @@ Both applications took ~15 minutes to build and another 1 hour to optimize for p
 
 ## Lessons learned
 
-- After optimizing the Elixir Phoenix app setup to production mode, I see almost 10x improvement from **455 RPS to 4,724 RPS**. The optimizations I did:
+- After optimizing the Elixir Phoenix app setup to production mode, I see almost 10x improvement from **455 RPS to 6,112RPS**. The optimizations I did:
   - Set the `MIX_ENV=prod`
   - Compile the source code 
   - Set the `max_keepalive` parameter in `config/prod.exs`
@@ -16,7 +16,7 @@ Both applications took ~15 minutes to build and another 1 hour to optimize for p
 - After optimizing the set up to production mode for the Django DRF app, I see 58x improvements from **14 RPS to 816 RPS**. The optimizations I did:
   - Use Gunicorn and set the correct number of workers for Gunicorn
   - Set `DEBUG=False` in `settings.py`
-- Elixir Phoenix is superior in speed compared to Django at 5x. This is a huge difference when translated to infra expense.
+- Elixir Phoenix is superior in speed compared to Django at 7x. This is a huge difference when translated to infra expense.
 - Always run everything in production mode to get the full speed!
 - There are many things that is neglected here: avoiding N + 1 query, background job, database optimization, indexing, authentication & authorization in middleware, etc.
 
@@ -52,7 +52,65 @@ This is the benchmark is running on my machine with the following spec: 8 cores 
 ### Phoenix Result
 
 ```shell
-$ make run-benchmark
+fadhil@fadhil-ThinkPad-T470p benchmark-frameworks (main) $ make run-benchmark 
+echo "Benchmarking non-database endpoint"
+Benchmarking non-database endpoint
+ab -n 1000 -c 100 localhost:8000/api/healthz
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        Cowboy
+Server Hostname:        localhost
+Server Port:            8000
+
+Document Path:          /api/healthz
+Document Length:        15 bytes
+
+Concurrency Level:      100
+Time taken for tests:   0.143 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      261000 bytes
+HTML transferred:       15000 bytes
+Requests per second:    6989.34 [#/sec] (mean)
+Time per request:       14.308 [ms] (mean)
+Time per request:       0.143 [ms] (mean, across all concurrent requests)
+Transfer rate:          1781.46 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    2   2.2      2      11
+Processing:     1   11   4.1     11      28
+Waiting:        1   10   4.1      9      26
+Total:          4   13   4.1     12      30
+
+Percentage of the requests served within a certain time (ms)
+  50%     12
+  66%     14
+  75%     15
+  80%     16
+  90%     19
+  95%     21
+  98%     24
+  99%     26
+ 100%     30 (longest request)
+echo "Benchmarking database endpoint"
+Benchmarking database endpoint
 ab -n 1000 -c 100 localhost:8000/api/todos/
 This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
@@ -77,36 +135,36 @@ Server Hostname:        localhost
 Server Port:            8000
 
 Document Path:          /api/todos/
-Document Length:        461 bytes
+Document Length:        11 bytes
 
 Concurrency Level:      100
-Time taken for tests:   0.212 seconds
+Time taken for tests:   0.164 seconds
 Complete requests:      1000
 Failed requests:        0
-Total transferred:      708000 bytes
-HTML transferred:       461000 bytes
-Requests per second:    4724.40 [#/sec] (mean)
-Time per request:       21.167 [ms] (mean)
-Time per request:       0.212 [ms] (mean, across all concurrent requests)
-Transfer rate:          3266.48 [Kbytes/sec] received
+Total transferred:      257000 bytes
+HTML transferred:       11000 bytes
+Requests per second:    6112.28 [#/sec] (mean)
+Time per request:       16.361 [ms] (mean)
+Time per request:       0.164 [ms] (mean, across all concurrent requests)
+Transfer rate:          1534.04 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0    2   2.2      1      12
-Processing:     2   18   4.9     18      35
-Waiting:        2   18   4.8     17      35
-Total:          8   20   5.6     19      44
+Connect:        0    1   1.1      1       5
+Processing:     2   14   5.6     14      34
+Waiting:        1   13   5.5     13      34
+Total:          5   16   5.3     15      35
 
 Percentage of the requests served within a certain time (ms)
-  50%     19
-  66%     21
-  75%     22
-  80%     24
-  90%     28
-  95%     31
-  98%     35
-  99%     36
- 100%     44 (longest request)
+  50%     15
+  66%     17
+  75%     18
+  80%     19
+  90%     23
+  95%     26
+  98%     30
+  99%     31
+ 100%     35 (longest request)
 ```
 
 ### Django + Django REST Framework (DRF) Result
