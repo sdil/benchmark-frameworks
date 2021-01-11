@@ -8,9 +8,15 @@ Both applications took ~15 minutes to build and another 1 hour to optimize for p
 
 ## Lessons learned
 
-- After optimizing the Elixir Phoenix app setup to production mode, I see almost 10x improvement from **455 RPS to 4,010 RPS**. All I did was set the `MIX_ENV=prod`, compile the source code & set the `max_keepalive` parameter in config/prod.exs.
-- After optimizing the set up to production mode for the Django DRF app, I see 28x improvements from **14 RPS to 400 RPS**. All I did was use Gunicorn and set the correct number of workers for Gunicorn.
-- Elixir Phoenix is superior in speed compared to Django in almost 10x. This is a huge difference when translated to infra expense.
+- After optimizing the Elixir Phoenix app setup to production mode, I see almost 10x improvement from **455 RPS to 4,010 RPS**. All I did was 
+  - Set the `MIX_ENV=prod`
+  - Compile the source code 
+  - Set the `max_keepalive` parameter in `config/prod.exs`
+  - Set the logger verbosity to `warn`
+- After optimizing the set up to production mode for the Django DRF app, I see 28x improvements from **14 RPS to 400 RPS**. All I did was 
+  - Use Gunicorn and set the correct number of workers for Gunicorn
+  - Set `DEBUG=False` in `settings.py`
+- Elixir Phoenix is superior in speed compared to Django at almost 10x. This is a huge difference when translated to infra expense.
 - Always run everything in production mode to get the full speed!
 - There are many things that is neglected here: avoiding N + 1 query, background job, database optimization, indexing, etc.
 
@@ -158,6 +164,10 @@ Percentage of the requests served within a certain time (ms)
  100%  70005 (longest request)
 
 ```
+
+## Please contribute
+
+If anyone has experience in building Todo list app using Ruby on Rails, NestJS, Laravel, Go Buffalo, etc., feel free to submit a PR to this repo together with production settings (and Docker Compose file) for the app. I would love to see the performance for these frameworks as well.
 
 ## References
 
