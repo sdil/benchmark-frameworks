@@ -194,57 +194,8 @@ Details (average, fastest, slowest):
 Status code distribution:
   [200]	84453 responses
 
-$ hey -z 30s http://localhost:8000/api/healthz/
 
-Summary:
-  Total:	30.0123 secs
-  Slowest:	0.6489 secs
-  Fastest:	0.0018 secs
-  Average:	0.0178 secs
-  Requests/sec:	2813.9459
-  
-  Total data:	1351248 bytes
-  Size/request:	16 bytes
-
-Response time histogram:
-  0.002 [1]	|
-  0.066 [84381]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  0.131 [28]	|
-  0.196 [26]	|
-  0.261 [5]	|
-  0.325 [1]	|
-  0.390 [0]	|
-  0.455 [0]	|
-  0.519 [3]	|
-  0.584 [5]	|
-  0.649 [3]	|
-
-
-Latency distribution:
-  10% in 0.0109 secs
-  25% in 0.0134 secs
-  50% in 0.0165 secs
-  75% in 0.0207 secs
-  90% in 0.0257 secs
-  95% in 0.0292 secs
-  99% in 0.0378 secs
-
-Details (average, fastest, slowest):
-  DNS+dialup:	0.0005 secs, 0.0018 secs, 0.6489 secs
-  DNS-lookup:	0.0001 secs, 0.0000 secs, 0.0094 secs
-  req write:	0.0001 secs, 0.0000 secs, 0.0120 secs
-  resp wait:	0.0167 secs, 0.0013 secs, 0.6412 secs
-  resp read:	0.0004 secs, 0.0000 secs, 0.0610 secs
-
-Status code distribution:
-  [200]	84453 responses
-
-
-
-fadhil@fadhil-ThinkPad-T470p Downloads $ ./hey_linux_amd64 -z 30s http://localhost:8000/api/healthz/^C
-fadhil@fadhil-ThinkPad-T470p Downloads $ 
-fadhil@fadhil-ThinkPad-T470p Downloads $ 
-fadhil@fadhil-ThinkPad-T470p Downloads $ ./hey_linux_amd64 -z 30s http://localhost:8000/api/todos/
+$ hey -z 30s http://localhost:8000/api/todos/
 
 Summary:
   Total:	30.1113 secs
