@@ -52,119 +52,98 @@ This is the benchmark is running on my machine with the following spec: 8 cores 
 ### Phoenix Result
 
 ```shell
-fadhil@fadhil-ThinkPad-T470p benchmark-frameworks (main) $ make run-benchmark 
-echo "Benchmarking non-database endpoint"
-Benchmarking non-database endpoint
-ab -n 1000 -c 100 localhost:8000/api/healthz
-This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
-Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-Licensed to The Apache Software Foundation, http://www.apache.org/
+fadhil@fadhil-ThinkPad-T470p Downloads $ ./hey_linux_amd64 -z 30s http://localhost:8000/api/healthz
 
-Benchmarking localhost (be patient)
-Completed 100 requests
-Completed 200 requests
-Completed 300 requests
-Completed 400 requests
-Completed 500 requests
-Completed 600 requests
-Completed 700 requests
-Completed 800 requests
-Completed 900 requests
-Completed 1000 requests
-Finished 1000 requests
+Summary:
+  Total:	30.0071 secs
+  Slowest:	0.2314 secs
+  Fastest:	0.0004 secs
+  Average:	0.0044 secs
+  Requests/sec:	11353.5627
+  
+  Total data:	5110305 bytes
+  Size/request:	15 bytes
 
-
-Server Software:        Cowboy
-Server Hostname:        localhost
-Server Port:            8000
-
-Document Path:          /api/healthz
-Document Length:        15 bytes
-
-Concurrency Level:      100
-Time taken for tests:   0.157 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      261000 bytes
-HTML transferred:       15000 bytes
-Requests per second:    6387.12 [#/sec] (mean)
-Time per request:       15.657 [ms] (mean)
-Time per request:       0.157 [ms] (mean, across all concurrent requests)
-Transfer rate:          1627.97 [Kbytes/sec] received
-
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        0    2   2.3      1      12
-Processing:     2   12   5.5     12      33
-Waiting:        2   12   5.3     11      33
-Total:          4   14   5.9     13      41
-
-Percentage of the requests served within a certain time (ms)
-  50%     13
-  66%     16
-  75%     18
-  80%     20
-  90%     23
-  95%     25
-  98%     28
-  99%     29
- 100%     41 (longest request)
-echo "Benchmarking database endpoint"
-Benchmarking database endpoint
-ab -n 1000 -c 100 localhost:8000/api/todos/
-This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
-Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-Licensed to The Apache Software Foundation, http://www.apache.org/
-
-Benchmarking localhost (be patient)
-Completed 100 requests
-Completed 200 requests
-Completed 300 requests
-Completed 400 requests
-Completed 500 requests
-Completed 600 requests
-Completed 700 requests
-Completed 800 requests
-Completed 900 requests
-Completed 1000 requests
-Finished 1000 requests
+Response time histogram:
+  0.000 [1]	|
+  0.023 [340366]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.047 [113]	|
+  0.070 [106]	|
+  0.093 [0]	|
+  0.116 [2]	|
+  0.139 [50]	|
+  0.162 [0]	|
+  0.185 [5]	|
+  0.208 [0]	|
+  0.231 [44]	|
 
 
-Server Software:        Cowboy
-Server Hostname:        localhost
-Server Port:            8000
+Latency distribution:
+  10% in 0.0025 secs
+  25% in 0.0032 secs
+  50% in 0.0040 secs
+  75% in 0.0050 secs
+  90% in 0.0065 secs
+  95% in 0.0078 secs
+  99% in 0.0114 secs
 
-Document Path:          /api/todos/
-Document Length:        461 bytes
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0000 secs, 0.0004 secs, 0.2314 secs
+  DNS-lookup:	0.0000 secs, 0.0000 secs, 0.0103 secs
+  req write:	0.0000 secs, 0.0000 secs, 0.0307 secs
+  resp wait:	0.0043 secs, 0.0003 secs, 0.2313 secs
+  resp read:	0.0001 secs, 0.0000 secs, 0.0241 secs
 
-Concurrency Level:      100
-Time taken for tests:   0.196 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      708000 bytes
-HTML transferred:       461000 bytes
-Requests per second:    5107.30 [#/sec] (mean)
-Time per request:       19.580 [ms] (mean)
-Time per request:       0.196 [ms] (mean, across all concurrent requests)
-Transfer rate:          3531.22 [Kbytes/sec] received
+Status code distribution:
+  [200]	340687 responses
 
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        0    1   1.1      1       5
-Processing:     5   18   5.9     17      34
-Waiting:        1   17   5.6     16      33
-Total:          5   19   5.6     18      34
 
-Percentage of the requests served within a certain time (ms)
-  50%     18
-  66%     21
-  75%     22
-  80%     24
-  90%     27
-  95%     29
-  98%     31
-  99%     32
- 100%     34 (longest request)
+
+fadhil@fadhil-ThinkPad-T470p Downloads $ ./hey_linux_amd64 -z 30s http://localhost:8000/api/todos/
+
+
+Summary:
+  Total:	30.0414 secs
+  Slowest:	0.0621 secs
+  Fastest:	0.0007 secs
+  Average:	0.0081 secs
+  Requests/sec:	6136.7042
+  
+  Total data:	2027905 bytes
+  Size/request:	11 bytes
+
+Response time histogram:
+  0.001 [1]	|
+  0.007 [72247]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.013 [99559]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.019 [10664]	|■■■■
+  0.025 [1323]	|■
+  0.031 [292]	|
+  0.038 [99]	|
+  0.044 [41]	|
+  0.050 [9]	|
+  0.056 [34]	|
+  0.062 [86]	|
+
+
+Latency distribution:
+  10% in 0.0049 secs
+  25% in 0.0060 secs
+  50% in 0.0076 secs
+  75% in 0.0095 secs
+  90% in 0.0120 secs
+  95% in 0.0138 secs
+  99% in 0.0192 secs
+
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0000 secs, 0.0007 secs, 0.0621 secs
+  DNS-lookup:	0.0000 secs, 0.0000 secs, 0.0030 secs
+  req write:	0.0000 secs, 0.0000 secs, 0.0165 secs
+  resp wait:	0.0080 secs, 0.0007 secs, 0.0620 secs
+  resp read:	0.0001 secs, 0.0000 secs, 0.0317 secs
+
+Status code distribution:
+  [200]	184355 responses
 ```
 
 ### Django + Django REST Framework (DRF) Result
