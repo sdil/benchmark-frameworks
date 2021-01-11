@@ -2,7 +2,7 @@ start-phoenix:
 	cd todo_phoenix && docker-compose build && docker-compose down && docker-compose up -d && sleep 5 && docker-compose exec web mix ecto.create && docker-compose exec web mix ecto.migrate
 
 start-django:
-	cd todo_django && docker-compose build && docker-compose down && docker-compose up -d && sleep 5 && docker-compose exec web python manage.py migrate &&  docker-compose exec web python manage.py runserver
+	cd todo_django && docker-compose build && docker-compose down && docker-compose up -d && sleep 5 && docker-compose exec web python manage.py migrate
 
 stop:
 	cd todo_django && docker-compose down

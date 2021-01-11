@@ -52,7 +52,7 @@ This is the benchmark is running on my machine with the following spec: 8 cores 
 ### Phoenix Result
 
 ```shell
-fadhil@fadhil-ThinkPad-T470p Downloads $ ./hey_linux_amd64 -z 30s http://localhost:8000/api/healthz
+$ hey -z 30s http://localhost:8000/api/healthz
 
 Summary:
   Total:	30.0071 secs
@@ -99,7 +99,7 @@ Status code distribution:
 
 
 
-fadhil@fadhil-ThinkPad-T470p Downloads $ ./hey_linux_amd64 -z 30s http://localhost:8000/api/todos/
+$ hey -z 30s http://localhost:8000/api/todos/
 
 
 Summary:
@@ -149,61 +149,146 @@ Status code distribution:
 ### Django + Django REST Framework (DRF) Result
 
 ```shell
-$ make run-benchmark 
-ab -n 1000 -c 100 localhost:8000/api/todos/
-This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
-Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-Licensed to The Apache Software Foundation, http://www.apache.org/
+$ hey -z 30s http://localhost:8000/api/healthz/
 
-Benchmarking localhost (be patient)
-Completed 100 requests
-Completed 200 requests
-Completed 300 requests
-Completed 400 requests
-Completed 500 requests
-Completed 600 requests
-Completed 700 requests
-Completed 800 requests
-Completed 900 requests
-Completed 1000 requests
-Finished 1000 requests
+Summary:
+  Total:	30.0123 secs
+  Slowest:	0.6489 secs
+  Fastest:	0.0018 secs
+  Average:	0.0178 secs
+  Requests/sec:	2813.9459
+  
+  Total data:	1351248 bytes
+  Size/request:	16 bytes
+
+Response time histogram:
+  0.002 [1]	|
+  0.066 [84381]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.131 [28]	|
+  0.196 [26]	|
+  0.261 [5]	|
+  0.325 [1]	|
+  0.390 [0]	|
+  0.455 [0]	|
+  0.519 [3]	|
+  0.584 [5]	|
+  0.649 [3]	|
 
 
-Server Software:        gunicorn/20.0.4
-Server Hostname:        localhost
-Server Port:            8000
+Latency distribution:
+  10% in 0.0109 secs
+  25% in 0.0134 secs
+  50% in 0.0165 secs
+  75% in 0.0207 secs
+  90% in 0.0257 secs
+  95% in 0.0292 secs
+  99% in 0.0378 secs
 
-Document Path:          /api/todos/
-Document Length:        381 bytes
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0005 secs, 0.0018 secs, 0.6489 secs
+  DNS-lookup:	0.0001 secs, 0.0000 secs, 0.0094 secs
+  req write:	0.0001 secs, 0.0000 secs, 0.0120 secs
+  resp wait:	0.0167 secs, 0.0013 secs, 0.6412 secs
+  resp read:	0.0004 secs, 0.0000 secs, 0.0610 secs
 
-Concurrency Level:      100
-Time taken for tests:   1.225 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      669000 bytes
-HTML transferred:       381000 bytes
-Requests per second:    816.13 [#/sec] (mean)
-Time per request:       122.529 [ms] (mean)
-Time per request:       1.225 [ms] (mean, across all concurrent requests)
-Transfer rate:          533.20 [Kbytes/sec] received
+Status code distribution:
+  [200]	84453 responses
 
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        0    1   2.2      0      11
-Processing:    19  114  17.6    118     136
-Waiting:       13  114  17.7    118     136
-Total:         24  115  15.7    118     137
+$ hey -z 30s http://localhost:8000/api/healthz/
 
-Percentage of the requests served within a certain time (ms)
-  50%    118
-  66%    120
-  75%    122
-  80%    123
-  90%    125
-  95%    127
-  98%    130
-  99%    132
- 100%    137 (longest request)
+Summary:
+  Total:	30.0123 secs
+  Slowest:	0.6489 secs
+  Fastest:	0.0018 secs
+  Average:	0.0178 secs
+  Requests/sec:	2813.9459
+  
+  Total data:	1351248 bytes
+  Size/request:	16 bytes
+
+Response time histogram:
+  0.002 [1]	|
+  0.066 [84381]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.131 [28]	|
+  0.196 [26]	|
+  0.261 [5]	|
+  0.325 [1]	|
+  0.390 [0]	|
+  0.455 [0]	|
+  0.519 [3]	|
+  0.584 [5]	|
+  0.649 [3]	|
+
+
+Latency distribution:
+  10% in 0.0109 secs
+  25% in 0.0134 secs
+  50% in 0.0165 secs
+  75% in 0.0207 secs
+  90% in 0.0257 secs
+  95% in 0.0292 secs
+  99% in 0.0378 secs
+
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0005 secs, 0.0018 secs, 0.6489 secs
+  DNS-lookup:	0.0001 secs, 0.0000 secs, 0.0094 secs
+  req write:	0.0001 secs, 0.0000 secs, 0.0120 secs
+  resp wait:	0.0167 secs, 0.0013 secs, 0.6412 secs
+  resp read:	0.0004 secs, 0.0000 secs, 0.0610 secs
+
+Status code distribution:
+  [200]	84453 responses
+
+
+
+fadhil@fadhil-ThinkPad-T470p Downloads $ ./hey_linux_amd64 -z 30s http://localhost:8000/api/healthz/^C
+fadhil@fadhil-ThinkPad-T470p Downloads $ 
+fadhil@fadhil-ThinkPad-T470p Downloads $ 
+fadhil@fadhil-ThinkPad-T470p Downloads $ ./hey_linux_amd64 -z 30s http://localhost:8000/api/todos/
+
+Summary:
+  Total:	30.1113 secs
+  Slowest:	0.3073 secs
+  Fastest:	0.0341 secs
+  Average:	0.0837 secs
+  Requests/sec:	596.3874
+  
+  Total data:	6841998 bytes
+  Size/request:	381 bytes
+
+Response time histogram:
+  0.034 [1]	|
+  0.061 [2800]	|■■■■■■■■■■
+  0.089 [10855]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.116 [1330]	|■■■■■
+  0.143 [1736]	|■■■■■■
+  0.171 [838]	|■■■
+  0.198 [260]	|■
+  0.225 [93]	|
+  0.253 [36]	|
+  0.280 [7]	|
+  0.307 [2]	|
+
+
+Latency distribution:
+  10% in 0.0593 secs
+  25% in 0.0643 secs
+  50% in 0.0717 secs
+  75% in 0.0870 secs
+  90% in 0.1344 secs
+  95% in 0.1507 secs
+  99% in 0.1914 secs
+
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0002 secs, 0.0341 secs, 0.3073 secs
+  DNS-lookup:	0.0000 secs, 0.0000 secs, 0.0029 secs
+  req write:	0.0001 secs, 0.0000 secs, 0.0185 secs
+  resp wait:	0.0832 secs, 0.0157 secs, 0.3070 secs
+  resp read:	0.0002 secs, 0.0000 secs, 0.0260 secs
+
+Status code distribution:
+  [200]	17958 responses
+
 ```
 
 ## Please contribute

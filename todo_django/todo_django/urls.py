@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from task.views import TodoRetrieveAPIView
+from task.views import TodoRetrieveAPIView, healthz
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/todos/", TodoRetrieveAPIView.as_view(), name="todo-retrieve",),
+    path("api/healthz/", healthz, name="healthz",),
 ]
