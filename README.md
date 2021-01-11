@@ -49,6 +49,11 @@ $ make run-benchmark
 
 This is the benchmark is running on my machine with the following spec: 8 cores 16 threads Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz and 16GB of RAM.
 
+|                | DB endpoint (rps) | Non-DB endpoint (rps) |
+|----------------|-------------------|-----------------------|
+| Elixir Phoenix | 6,136             | 11,353                |
+| Django DRF     | 596               | 2,813                 |
+
 ### Phoenix Result
 
 ```shell
